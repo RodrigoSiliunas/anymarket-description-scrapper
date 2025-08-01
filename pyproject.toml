@@ -1,0 +1,138 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "anymarket-description-scrapper"
+version = "1.0.0"
+description = "Extrator de documentação de campos de API usando Selenium e BeautifulSoup4."
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Rodrigo", email = "rodrigo.siliunas12@gmail.com"}
+]
+maintainers = [
+    {name = "Rodrigo", email = "rodrigo.siliunas12@gmail.com"}
+]
+keywords = [
+    "selenium",
+    "beautifulsoup4",
+    "web-scraping",
+    "api-documentation",
+    "anymarket",
+    "data-extraction"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: WWW/HTTP :: Browsers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Markup :: HTML"
+]
+requires-python = ">=3.8"
+dependencies = [
+    "selenium>=4.34.0",
+    "beautifulsoup4>=4.13.0",
+    "requests>=2.32.0",
+    "python-dotenv>=1.1.0",
+    "attrs>=25.3.0",
+    "pathlib2; python_version<'3.4'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "autopep8>=2.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/RodrigoSiliunas/anymarket-description-scrapper"
+Documentation = "https://github.com/RodrigoSiliunas/anymarket-description-scrapper#readme"
+Repository = "https://github.com/RodrigoSiliunas/anymarket-description-scrapper.git"
+"Bug Tracker" = "https://github.com/RodrigoSiliunas/anymarket-description-scrapper/issues"
+
+[project.scripts]
+extrator-anymarket = "app.main:main"
+
+# Configurações do setuptools
+[tool.setuptools]
+package-dir = {"" = "."}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+exclude = ["tests*", "docs*"]
+
+[tool.setuptools.package-data]
+app = ["assets/*", "configurations/*"]
+
+# Configurações do autopep8 (formatador de código)
+[tool.autopep8]
+max_line_length = 88
+aggressive = 1
+experimental = true
+ignore = ["E203", "W503"]
+
+# Configurações do isort (organizador de imports)
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["app"]
+
+# Configurações do MyPy (verificador de tipos)
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "selenium.*",
+    "bs4.*",
+]
+ignore_missing_imports = true
+
+# Configuração específica para o projeto
+[tool.extrator-anymarket]
+# Configurações específicas do extrator
+selenium_timeout = 30
+output_format = "json"
+max_retries = 3
+delay_between_requests = 1.0
+
+[tool.extractor.selenium]
+# Configurações do Selenium
+webdriver = "chrome"
+headless = true
+window_size = [1920, 1080]
+page_load_timeout = 30
+implicit_wait = 10
+
+[tool.extractor.output]
+# Configurações de saída
+base_path = "app/assets"
+file_extension = "json"
+encoding = "utf-8"
+pretty_print = true
